@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Client } from './client';
-import { ClientsService } from '../../clients.service';
+import { Product } from './product';
+import { ProductService } from '../../product.service';
 
 @Component({
-  selector: 'app-clients-form',
-  templateUrl: './clients-form.component.html',
-  styleUrls: ['./clients-form.component.css']
+  selector: 'app-product-form',
+  templateUrl: './product-form.component.html',
+  styleUrls: ['./product-form.component.css']
 })
-export class ClientsFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit {
 
-  client: Client;
+  product: Product;
   success: Boolean = false;
   erros: String[];
   id: number;
 
   constructor( 
-    private service : ClientsService,
+    private service : ProductService,
     private router : Router,
     private activatedRoute : ActivatedRoute
     ) { 
-    this.client = new Client();
+    this.product = new Product();
   }
 
   ngOnInit(): void {
@@ -32,8 +32,8 @@ export class ClientsFormComponent implements OnInit {
         this.service
           .findById(this.id)
           .subscribe( 
-            response => this.client = response ,
-            errorReponse => this.client = new Client());
+            response => this.product = response ,
+            errorReponse => this.product = new Product());
       }
     })
   }
@@ -41,20 +41,20 @@ export class ClientsFormComponent implements OnInit {
   onSubmit() {
     if(this.id) {
       this.service
-        .update(this.client)
+        .update(this.product)
         .subscribe(response => {
           this.success = true;
           this.erros = null;
         }, errorResponse => {
-          this.erros = ['Erro ao atualizar o cliente.']
+          this.erros = ['Erro ao atualizar o produto.']
         })
     } else {
       this.service
-          .save(this.client)
+          .save(this.product)
           .subscribe( response =>{
               this.success = true;
               this.erros = null;
-              this.client = response;
+              this.product = response;
           },  errorResponse => {
               this.success = false;
               this.erros = errorResponse.error.erros;
@@ -64,6 +64,7 @@ export class ClientsFormComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate(['/clients-list']);
+    this.router.navigate(['/product-list']);
   }
+
 }

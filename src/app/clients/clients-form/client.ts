@@ -1,6 +1,6 @@
 export class Client {
     id: number;
     name: string;
-    cpf: string;
+    document: string;
     dateTimeCreation: string;
 }

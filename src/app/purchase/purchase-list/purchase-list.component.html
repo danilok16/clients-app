@@ -1,0 +1,73 @@
+<h1 class="mt-4">Vendas</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Consulta</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-primary" (click)="newPurchase()">
+                <i class="fa fa-plus"></i>Novo
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let purchase of purchases">
+                        <td>{{ purchase.id }}</td>
+                        <td>{{ purchase.client.name }}</td>
+                        <td>{{ purchase.amount }}</td>
+                        <td>{{ purchase.dateTimeCreation }}</td>
+                        <td>
+                            <button id="updateBtn" class="btn btn-primary mr-1" routerLink="/purchase-form/{{ purchase.id }}">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <button id="deleteBtn" class="btn btn-danger" (click)="prepareToDelete(purchase)"
+                                 data-toggle="modal" data-target="#deleteDialog">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="deleteDialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+                </div>
+                <div class="modal-body" *ngIf="selectedPurchase">
+                    Confirma a deleção da venda {{ selectedPurchase.id }}?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="deletePurchase()" data-dismiss="modal">Confirma</button>
+                    <button class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
